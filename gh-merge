@@ -1,0 +1,63 @@
+#!/usr/bin/python3
+"""gh-merge maps the results from gh-issues.py onto the results
+produced commit-entropy. The combined file is indexed by the dates
+from commit-entropy and shows the corresponding issue open/close
+activity for each day.
+
+The script is controlled by a config file that specifies the
+pathnames of three files used by the script. All three are optional, 
+with the defaults as specified below:
+   => entropy_path (optional, defaults to 'entropy.csv'),
+   => issues_path (optional, defaults to 'gh-issues.csv'),
+   => merged_path (optional, defaults to 'gh-entropy-issues.csv').
+
+If the configuration is not specified as the only argument to this
+script, an attempt will be made to access the default configuration
+file (gh-merge.cfg).
+
+Copyright 2015 Grip QA
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
+
+__author__ = "Dean Stevens"
+__copyright__ = "Copyright 2015, Grip QA"
+__license__ = "Apache License, Version 2.0"
+__status__ = "Prototype"
+__version__ = "0.1.0"
+
+import sys
+import argparse
+
+from collections import defaultdict
+
+from github_issues import gh_merge
+
+if __name__ == '__main__':
+    default_config = "gh_merge.cfg"
+    help_str = ("Pathname to the configuration file (optional), if absent "
+                "will use default config file '{0}'").format(default_config)
+    parser = argparse.ArgumentParser(
+                      description=__doc__
+                     ,formatter_class=argparse.RawDescriptionHelpFormatter
+                     )
+    parser.add_argument("config_file_path"
+                        ,nargs='?'
+                        ,default=default_config
+                        ,help=help_str
+                        )
+    
+    cfg_path = parser.parse_args().config_file_path
+    config_data = gh_merge.get_config_data(cfg_path)
+    print(config_data)
+    gh_merge.github_merge(config_data)

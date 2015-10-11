@@ -1,0 +1,34 @@
+#!/bin/bash
+# Installs the gh-issues and gh-merge scrips, along with their shared modules
+# into appropriate directories for a Linux distribution
+# No arguments, no return values
+
+# Directories to recieve the copied files. You may want to modify these
+CMDDIR=/usr/local/bin
+PYVER=$(readlink /usr/bin/python3)
+PYDIR=/usr/local/lib/$PYVER/dist-packages/github_issues
+
+# Local directory holding the shared modules
+LOCDIR=./github_issues
+
+echo -e "\nCopying commands to $CMDDIR ...\n"
+GHPROG=('gh-issues' 'gh-merge')
+for f in "${GHPROG[@]}"; do
+    cp -v ./$f $CMDDIR/$f
+done
+
+echo -e "\nCopying shared modules to $PYDIR ...\n"
+if [ -d $PYDIR ]; then
+    echo "$PYDIR already exists..."
+    echo "   ... will just copy files"
+else
+    echo "Creating $PYDIR..."
+    mkdir $PYDIR
+fi    
+
+GHFILES=('gh_issues.py' 'gh_merge.py' 'gh_shared.py' '__init__.py')
+for f in "${GHFILES[@]}"; do
+    cp -v $LOCDIR/$f $PYDIR/$f
+done
+
+echo -e "\nInstallation Complete!\n"
