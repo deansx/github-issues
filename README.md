@@ -79,8 +79,9 @@ and you might need to run it as root.
 
 **NOTE:**
 
-gh-issues uses the excellent **[requests package](http://docs.python-requests.org/en/latest/)**
-to dramatically simplify the HTTP interactions. If you don't already have the
+gh-issues uses the excellent **[requests](http://docs.python-requests.org/en/latest/)**
+package to dramatically simplify the HTTP interactions. If you don't already
+have the
 package, the [requests installation instructions](http://docs.python-requests.org/en/latest/user/install/#install) are straightforward and easy to follow.
 
 
