@@ -77,6 +77,13 @@ shell's PATH, and the shared modules in a directory that is in your Python
 installation's sys.path. You may need to modify it for your specific situation,
 and you might need to run it as root.
 
+**NOTE:**
+
+gh-issues uses the excellent **[requests package](http://docs.python-requests.org/en/latest/)**
+to dramatically simplify the HTTP interactions. If you don't already have the
+package, the [requests installation instructions](http://docs.python-requests.org/en/latest/user/install/#install) are straightforward and easy to follow.
+
+
 Support
 ----------------------
 
